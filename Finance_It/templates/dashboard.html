@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h2>Bienvenido, {{ session['user'] }}</h2>
+    <div class="dashboard">
+        <h3>Opciones</h3>
+        <form action="/add_expense" method="post">
+            <label for="ingreso">Ingreso Mensual:</label>
+            <input type="number" id="ingreso" name="ingreso" step="0.01" required>
+            
+            <label for="esenciales">Gastos Esenciales:</label>
+            <input type="number" id="esenciales" name="esenciales" step="0.01" required>
+            
+            <label for="no_esenciales">Gastos No Esenciales:</label>
+            <input type="number" id="no_esenciales" name="no_esenciales" step="0.01" required>
+            
+            <button type="submit">Guardar y Generar Gráfico</button>
+        </form>
+        
+        <h3>Gráfico Actual</h3>
+        <img src="/static/grafico.png" alt="Gráfico Circular">
+        
+        <h3>Gestión de Metas</h3>
+        <form action="/add_goal" method="post">
+            <label for="nombre_meta">Nombre de la Meta:</label>
+            <input type="text" id="nombre_meta" name="nombre_meta" required>
+            
+            <label for="valor_meta">Valor de la Meta:</label>
+            <input type="number" id="valor_meta" name="valor_meta" step="0.01" required>
+            
+            <button type="submit">Agregar Meta</button>
+        </form>
+        
+        <h3>Metas Actuales</h3>
+        <ul>
+            {% for meta in metas %}
+            <li>{{ meta['nombre'] }} - ${{ meta['valor'] }} ({{ meta['dias'] }} días)</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

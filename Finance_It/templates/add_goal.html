@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Meta</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h2>Agregar Meta Financiera</h2>
+    <form action="/add_goal" method="post">
+        <label for="nombre_meta">Nombre de la Meta:</label>
+        <input type="text" id="nombre_meta" name="nombre_meta" required>
+        
+        <label for="valor_meta">Valor de la Meta:</label>
+        <input type="number" id="valor_meta" name="valor_meta" step="0.01" required>
+        
+        <button type="submit">Guardar Meta</button>
+    </form>
+</body>
+</html>
