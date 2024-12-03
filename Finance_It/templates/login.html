@@ -1,21 +1,39 @@
+<!-- login.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>Ingreso</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
 </head>
 <body>
-    <h2>Iniciar Sesión</h2>
-    <form action="/auth" method="post">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Ingresar</button>
-    </form>
+
+    <div class="navbar">
+        <a href="/">Login</a>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Ingreso</h2>
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <input type="submit" class="button" value="Entrar">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Finanzas</p>
+    </footer>
+
 </body>
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Agregar Ingreso/Gastos</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h2>Agregar Ingreso y Gastos</h2>
+    <form method="POST">
+        <label for="ingreso_mensual">Ingreso Mensual:</label>
+        <input type="number" name="ingreso_mensual" required>
+        <br>
+        <label for="gasto_esencial">Gasto Esencial:</label>
+        <input type="number" name="gasto_esencial" required>
+        <br>
+        <label for="gasto_no_esencial">Gasto No Esencial:</label>
+        <input type="number" name="gasto_no_esencial" required>
+        <br>
+        <label for="ahorro">Ahorro:</label>
+        <input type="number" name="ahorro" required>
+        <br>
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="/dashboard">Volver</a>
+</body>
+</html>
