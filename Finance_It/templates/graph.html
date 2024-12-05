@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Gráfico</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Metas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-    <h2>Gráfico de Metas</h2>
-    <img src="/{{ graph_path }}" alt="Gráfico de Metas">
-    <a href="/dashboard">Volver al Panel</a>
+    <div class="container">
+        <h1>Gráfico de Metas Financieras</h1>
+        <img src="{{ graph_path }}" alt="Gráfico de Metas">
+        <a href="{{ url_for('dashboard') }}">Volver al Dashboard</a>
+    </div>
 </body>
 </html>
