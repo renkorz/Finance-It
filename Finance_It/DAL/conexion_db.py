@@ -1,13 +1,14 @@
 import mysql.connector
+import auxiliares.constantes
 
 def conexion_db():
     try:
         # Establecer la conexión
         cnx = mysql.connector.connect(
-            user='root',
-            password='',
-            host='localhost',
-            database='financeit'
+            user=auxiliares.constantes.user,
+            password=auxiliares.constantes.password,
+            host=auxiliares.constantes.host,
+            database=auxiliares.constantes.database
             )
         return cnx
     except mysql.connector.Error as err:
@@ -18,11 +19,11 @@ def signup_db(username, name, last_name, mail, password):
     cnx = conexion_db()
     if cnx is not None:
         cursor = cnx.cursor()
-        query = """
-        INSERT INTO usuarios (username, name, last_name, mail, password)
+        query = f"""
+        INSERT INTO usuario (username, name, last_name, mail, password)
         SELECT %s, %s, %s, %s, %s
         WHERE NOT EXISTS (
-            SELECT 1 FROM usuarios WHERE username = %s
+            SELECT 1 FROM usuario WHERE username = '{username}'
         )
         """
         cursor.execute(query, (username, name, last_name, mail, password))

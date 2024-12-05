@@ -17,6 +17,22 @@ gastos_no_esenciales = []
 metas = []
 ahorros = []
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        name = request.form['name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        username = request.form['username']
+        password = request.form['password']
+        
+        # Aquí puedes agregar la lógica para guardar el nuevo usuario en la base de datos
+        DAL.conexion_db.signup_db(username, name, last_name, email, password)
+        
+        return redirect(url_for('login'))  # Redirigir al login después del registro
+    
+    return render_template('signup.html')  # Asegúrate de que el nombre del archivo sea correcto
+
 # Ruta de inicio (login)
 @app.route('/', methods=['GET', 'POST'])
 def login():

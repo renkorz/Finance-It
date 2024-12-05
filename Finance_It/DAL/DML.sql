@@ -1,0 +1,1 @@
+INSERT INTO Usuario (username, password, name, last_name, mail) VALUES('admin', '12345', 'admin', '', 'admin@admin.com')
