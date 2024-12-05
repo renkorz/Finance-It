@@ -20,22 +20,23 @@ ahorros = []
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['first_name']
         last_name = request.form['last_name']
-        email = request.form['email']
+        email = request.form['mail']
         username = request.form['username']
         password = request.form['password']
         
-        # Aquí puedes agregar la lógica para guardar el nuevo usuario en la base de datos
+        # Llama a la función para registrar al usuario
         DAL.conexion_db.signup_db(username, name, last_name, email, password)
-        
+        print('Registro Exitoso')
         return redirect(url_for('login'))  # Redirigir al login después del registro
     
-    return render_template('signup.html')  # Asegúrate de que el nombre del archivo sea correcto
+    return render_template('signup.html')  # Mostrar el formulario de registro
 
 # Ruta de inicio (login)
 @app.route('/', methods=['GET', 'POST'])
 def login():
+    username = None  # Inicializa username con un valor predeterminado
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -47,7 +48,7 @@ def login():
             return redirect(url_for('dashboard'))
         else:
             return render_template('login.html', mensaje='Credenciales incorrectas')
-    return render_template('login.html'), username
+    return render_template('login.html', username=username)  # Pasa username a la plantilla
 
 # Ruta del dashboard
 @app.route('/dashboard')
