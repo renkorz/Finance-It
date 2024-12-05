@@ -29,5 +29,3 @@ CREATE TABLE Ahorros (
    id_ahorros int  NOT NULL AUTO_INCREMENT PRIMARY KEY,
    ahorro_total int  NOT NULL
 );
-
-INSERT INTO Usuario (username, password, name, last_name, mail) VALUES('admin', '12345', 'admin', '', 'admin@admin.com')
