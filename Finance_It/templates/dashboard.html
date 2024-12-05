@@ -6,39 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles_dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles_dashboard.css" />
 </head>
 <body>
     <header>
-            <h1>FinanceIT</h1>
-            <p>Inicio</p>
-    </header>
-    <div class="navbar">
-        <a href="/dashboard">Dashboard</a>
-        <div class="dropdown">
-            <button class="dropbtn">Funciones</button>
-            <div class="dropdown-content">
-                <a href="/add_finances">Agregar Transacciones</a>
+        <section>
+            <div class="navbar">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/add_finances">Agregar Finanzas</a>
                 <a href="/add_goal">Agregar Meta</a>
                 <a href="/graph_expenses">Gráfico de Gastos</a>
                 <a href="/graph_goals">Gráfico de Metas</a>
                 <a href="/add_transaction">Transacciones</a>
+                <a href="/logout">Cerrar Sesión</a>
             </div>
-        </div>
-        <a href="/logout">Cerrar Sesión</a>
-    </div>
+        </section>
+    </header>
 
-    <div class="container">
-        <div class="section">
-            <h2>Resumen Financiero</h2>
-            <p><strong>Ingreso Mensual:</strong> ${{ ingreso }}</p>
-            <p><strong>Gastos Esenciales:</strong> ${{ total_gastos_esenciales }}</p>
-            <p><strong>Gastos No Esenciales:</strong> ${{ total_gastos_no_esenciales }}</p>
-            <p><strong>Metas Financieras:</strong> {{ metas|length }}</p>
-        </div>
+    <br>
+    <section>
+        <div class="container">
+            <div class="section">
+                <h2>Resumen Financiero</h2>
+                <p><strong>Ingreso Mensual:</strong> ${{ ingreso }}</p>
+                <p><strong>Gastos Esenciales:</strong> ${{ total_gastos_esenciales }}</p>
+                <p><strong>Gastos No Esenciales:</strong> ${{ total_gastos_no_esenciales }}</p>
+                <p><strong>Metas Financieras:</strong> {{ metas|length }}</p>
+            </div>
+    </section>
+
+
+
 
     <footer>
-        <p>&copy; 2024 FinanceIT</p>
+        <p>&copy; 2024 Finanzas</p>
     </footer>
 
 </body>
