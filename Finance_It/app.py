@@ -3,6 +3,7 @@ from jinja2 import Environment, select_autoescape
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import DAL.conexion_db
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'
@@ -22,11 +23,15 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username in usuarios and usuarios[username] == password:
-            session['username'] = username
+        
+        # Llama a la función login_db y guarda el resultado
+        result = DAL.conexion_db.login_db(username, password)
+        if result:
+            session['username'] = username  # Guarda el nombre de usuario en la sesión
             return redirect(url_for('dashboard'))
         else:
-            return "Usuario o contraseña incorrectos", 401
+            return render_template('login.html', mensaje='Credenciales incorrectas')
+    
     return render_template('login.html')
 
 # Ruta del dashboard
