@@ -47,8 +47,7 @@ def login():
             return redirect(url_for('dashboard'))
         else:
             return render_template('login.html', mensaje='Credenciales incorrectas')
-    
-    return render_template('login.html')
+    return render_template('login.html'), username
 
 # Ruta del dashboard
 @app.route('/dashboard')
@@ -69,7 +68,25 @@ def dashboard():
         total_gastos_no_esenciales=total_gastos_no_esenciales
     )
 
-# Ruta para agregar ingresos y gastos
+#Ruta para agregar ingresos y gastos.
+@app.route('/add_transaction', methods=['GET', 'POST'])
+def add_transaction():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        tipo_t = request.form['tipo-transaccion']
+        monto_t = float(request.form['monto'])
+        fecha_t = request.form['fecha']
+        
+        # Aquí puedes agregar la lógica para guardar la transacción en la base de datos
+        DAL.conexion_db.ingrsar_transccion(tipo_t, monto_t, fecha_t)
+
+        return redirect(url_for('dashboard'))  # Redirigir al dashboard después de agregar la transacción
+
+    return render_template('add_transaction.html')  # Asegúrate de que el nombre del archivo sea correcto
+
+# Ruta para definir ingresos fijos mensuales.
 @app.route('/add_finances', methods=['GET', 'POST'])
 def add_finances():
     global ingreso_mensual
@@ -77,12 +94,10 @@ def add_finances():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        ingreso_mensual = float(request.form['ingreso_mensual'])
-        gastos_esenciales.append(float(request.form['gasto_esencial']))
-        gastos_no_esenciales.append(float(request.form['gasto_no_esencial']))
-        ahorros.append(float(request.form['ahorro']))  # Agregar el ahorro
-        return redirect(url_for('dashboard'))
-    return render_template('add_finances.html')
+        tipo_t = request.form['tipo_finanza']
+        monto_t = float(request.form['monto'])
+        fecha_t = request.form['fecha']
+        ingreso_mensual = DAL.conexion_db.ingrsar_transccion(tipo_t, monto_t, fecha_t)
 
 # Ruta para agregar metas
 @app.route('/add_goal', methods=['GET', 'POST'])
