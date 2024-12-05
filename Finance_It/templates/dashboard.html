@@ -6,16 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <link href="styles_dashboard.css" rel="stylesheet">
 </head>
 <body>
-
+    <header>
+            <h1>FinanceIT</h1>
+            <p>Inicio</p>
+    </header>
     <div class="navbar">
         <a href="/dashboard">Dashboard</a>
-        <a href="/add_finances">Agregar Finanzas</a>
-        <a href="/add_goal">Agregar Meta</a>
-        <a href="/graph_expenses">Gráfico de Gastos</a>
-        <a href="/graph_goals">Gráfico de Metas</a>
+        <div class="dropdown">
+            <button class="dropbtn">Funciones</button>
+            <div class="dropdown-content">
+                <a href="/add_finances">Agregar Transacciones</a>
+                <a href="/add_goal">Agregar Meta</a>
+                <a href="/graph_expenses">Gráfico de Gastos</a>
+                <a href="/graph_goals">Gráfico de Metas</a>
+                <a href="/add_transaction">Transacciones</a>
+            </div>
+        </div>
         <a href="/logout">Cerrar Sesión</a>
     </div>
 
@@ -29,7 +38,7 @@
         </div>
 
     <footer>
-        <p>&copy; 2024 Finanzas</p>
+        <p>&copy; 2024 FinanceIT</p>
     </footer>
 
 </body>

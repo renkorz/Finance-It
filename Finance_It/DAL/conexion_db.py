@@ -1,7 +1,9 @@
 import mysql.connector
 import auxiliares.constantes
+from flask import session
 
 def conexion_db():
+    """Función para conectar la DB"""
     try:
         # Establecer la conexión
         cnx = mysql.connector.connect(
@@ -16,6 +18,7 @@ def conexion_db():
         return None
 
 def signup_db(username, name, last_name, mail, password):
+    """Función para agregar el usuario nuevo en la DB"""
     cnx = conexion_db()
     if cnx is not None:
         cursor = cnx.cursor()
@@ -32,6 +35,7 @@ def signup_db(username, name, last_name, mail, password):
         cnx.close()
 
 def login_db(username, password):
+    """Función para buscar las credenciales en la DB"""
     cnx = conexion_db()
     if cnx is not None:
         cursor = cnx.cursor()
@@ -46,4 +50,20 @@ def login_db(username, password):
             return True  # Credenciales correctas
         else:
             return False  # Credenciales incorrectas
+
+def ingrsar_transccion(tipo_t, monto_t, fecha_t):
+    """Función para agregar la transacción a la DB"""
+    cnx = conexion_db()
+    if cnx is not None:
+        cursor = cnx.cursor()
+        if 'username' in session:
+            username = 'username'
+            id_usuario = f"SELECT id_usuario FROM Usuario WHERE username = '{username}'"
+            query = f"INSERT INTO transaccion (tipo_transaccion, monto_transaccion, fecha, id_usuario) VALUES (%s, %s, %s, {id_usuario})"
+            cursor.execute(query, (tipo_t, monto_t, fecha_t))
+        else:
+            print("usuario no identificado correctamente.")
+        cnx.commit()
+        cursor.close
+        cnx.close
 

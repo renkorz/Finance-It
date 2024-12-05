@@ -1,0 +1,102 @@
+html {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  body {
+      margin: 0;
+      background-color: #efefef;
+  }
+  
+  header{
+    background-color: #364552;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: left;
+  }
+  
+  header h1{
+    font-size: 2rem;
+    text-align: left;
+  }
+
+  header p{
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  .container {
+    width: 500px;
+    margin: 0 auto;
+    text-align:center;
+  }
+  
+  section article {
+
+    text-align: left;
+    transition: box-shadow 0.3s ease;
+    background-color: #ffffff;
+    margin: 1rem 0rem;
+    border-radius:0.5rem;
+    padding: 0.25rem 0;
+  }
+  
+  section article h2, p{
+    padding: 0.25rem;
+    text-align: center;
+  }
+  
+  section article:hover{
+    box-shadow: 0 0.1rem 0.5rem rgba(0, 0, 0, 3);
+  }
+  
+  section article input{
+    width: 50%;
+    height: 25px;
+    background-color: #efefef;
+    margin: 0.2rem 2rem;
+    border-radius: 0.25rem;
+  }
+  
+  section article input:hover{
+    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 200, 3);
+  }
+  
+  section article button{
+    width: 50%;
+    background-color: #364552;
+    color: #fff;
+    margin: 1rem 1rem;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+  }
+  
+  section article button:hover{
+    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 200, 3);
+  }
+  
+  section article a{
+    color: rgb(90, 94, 94);
+    margin: 1rem 1rem;
+    padding: 0.5rem;
+  }
+
+.form-group {
+    text-align: center; /* Alinear los inputs a la derecha */
+    margin: 1rem 0rem;
+}
+
+.form-group label {
+    margin-bottom: 10px; /* Espacio entre el texto y el input */
+    display: block; /* Asegura que cada label esté en su propia línea */
+    margin: 1rem 0rem;
+  }
+  
+footer p{
+    background-color: #6f7c88;
+    padding: 3rem;
+    color: #fff;
+    text-align: left;
+}

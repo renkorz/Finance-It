@@ -2,39 +2,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingreso</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <title>FinanceIT | Ingreso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles_login.css" /> 
+
 </head>
 <body>
-
-    <div class="navbar">
-        <a href="/">Login</a>
-    </div>
-
-    <div class="container">
-        <div class="section">
-            <h2>Ingreso</h2>
+    <header>
+        <h1>FinanceIT</h1>
+        <p>Inicio</p>
+    </header>
+    <section class="container">
+        <article>
+            <h2>Iniciar Sesion</h2>
+            <hr>
+            <p>Ingresa tus datos de usuario</p>
             <form action="/" method="POST">
-                <div class="form-group">
-                    <label for="username">Usuario</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                <div class="form-group"> 
+                    <label for="username">Nombre de usuario:</label>
+                    <br>
+                    <input type="text" id="username" name="username" class="form-control">
+                    <br>
+                    <label for="password">Contraseña:</label>
+                    <br>
+                    <input type="password" id="password" name="password" class="form-control">
+                    <br>
+                    <a href="dashboard.html">
+                        <button>Ingresar</button>
+                    </a>
+                    <br>
+                    <a href="signup.html">¿No tienes cuenta? Registrate aquí</a>
                 </div>
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <input type="submit" class="button" value="Entrar">
             </form>
-            <br>
-            <a href="/signup">Registrarse</a>
-        </div>
-    </div>
-
+        </article>
+    </section>
     <footer>
-        <p>&copy; 2024 Finanzas</p>
+        <p>&copy; 2024 FinanceIT</p>
     </footer>
 
 </body>
