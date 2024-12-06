@@ -17,6 +17,11 @@ gastos_no_esenciales = []
 metas = []
 ahorros = []
 
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template('index.html')
+        
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -34,7 +39,7 @@ def signup():
     return render_template('signup.html')  # Mostrar el formulario de registro
 
 # Ruta de inicio (login)
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     username = None  # Inicializa username con un valor predeterminado
     if request.method == 'POST':

@@ -14,26 +14,22 @@
 	<body class="is-preload">
 
 		<!-- Header -->
-		<header id="header">
-        	<a href="/"><h1>FinanceIT</h1></a>
-				
-		</header>
+			<header id="header">
+                <a href="/">
+                    <h1>FinanceIT</h1>
+                </a>
+				<p>Tu asistente financiero</p>
+			</header>
 
+		<!-- Signup button -->
+            <a href="/signup">
+                <button type="button">
+                    Registrate Aquí
+                </button>
+            </a>
+			<a href="/login">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
 
-        <!-- Signup Form -->
-        <form id="signup-form" method="post" action="#">
-			<h1>Registrarse</h1>
-			<p>Completa los campos solicitados para continuar con el registro de usuario</p>
-            <input type="text" name="name" id="user_name" placeholder="Nombre" />
-            <input type="text" name="last_name" id="last_name" placeholder="Apellido" />
-			<input type="email" name="email" id="user_email" placeholder="Correo electrónico" />
-            <input type="text" name="username" id="username" placeholder="Nombre de Usuario" />
-            <input type="password" name="password" id="password" placeholder="Contraseña" />
-            <input type="submit" value="Registrarse" />
-            <a href="/">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
-        </form>
-
-
+            
 		<!-- Footer -->
 			<footer id="footer">
 				<ul class="icons">
@@ -48,7 +44,7 @@
 			</footer>
 
 		<!-- Scripts -->
-        <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
 	</body>
 </html>
