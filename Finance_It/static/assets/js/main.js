@@ -101,6 +101,17 @@
 
 		})();
 
+	//checkboxes appear only on a selected option
+		function mostrarCheckboxes() {
+            var select = document.getElementById("tipo-transaccion");
+            var checkboxes = document.getElementById("checkboxes");
+            if (select.value === "gasto") {
+                checkboxes.style.display = "block"; // Muestra los radio buttons
+            } else {
+                checkboxes.style.display = "none"; // Oculta los radio buttons
+            }
+        }
+
 	// Signup Form.
 		(function() {
 

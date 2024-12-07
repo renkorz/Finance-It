@@ -6,39 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
 </head>
-<body class = "is-preload">
+<body class="is-preload">
     <!-- Header -->
-	<header id="dashboard-header">
-		<h1>FinanceIT</h1>
+    <header id="dashboard-header">
+        <h1>FinanceIT</h1>
         <hr>
-		<!-- Navigation Bar -->
-		<nav id="nav-bar">
-			<a href="/dashboard">Inicio</a>
-			<a href="/add_data">Ingresar Datos</a>
+        <!-- Navigation Bar -->
+        <nav id="nav-bar">
+            <a href="/dashboard">Inicio</a>
+            <a href="/add_data">Ingresar Datos</a>
             <a href="/add_goal">Agregar Meta</a>
-			<a href="/view_graphs">Ver Gráficos</a>
-			<a href="/signup">Cerrar Sesión</a>
-		</nav>
-	</header>
+            <a href="/graph">Ver Gráficos</a>
+            <a href="/">Cerrar Sesión</a>
+        </nav>
+    </header>
 
     <!-- Contenido de la página -->
-	<section id="adddata-form">
+    <section id="adddata-form">
         <h2>Ingresar Datos</h2>
         <form action="POST">
-        <select id="tipo-transaccion" name="tipo-transaccion" required>
-            <option value="ingreso">Ingreso</option>
-            <option value="gasto">Gasto</option>
-        </select>
+            <select id="tipo-transaccion" name="tipo-transaccion" required onchange="mostrarCheckboxes()">
+                <option value="ingreso">Ingreso</option>
+                <option value="gasto">Gasto</option>
+            </select>
+            <div id="checkboxes" style="display: none;">
+                <input type="radio" id="ess1" name="tipo_gasto" value="Gasto Esencial">
+                <label for="ess1">Gasto Esencial</label>
+                <input type="radio" id="ess2" name="tipo_gasto" value="No Esencial">
+                <label for="ess2">No Esencial</label>
+            </div>
             <input type="number" name="Monto" id="monto" placeholder="$" />
             <input type="date" name="Fecha" id="fecha" />
             <input type="text" name="Descripción" id="descripcion" placeholder="Descripción"/>
             <button type="submit">Agregar</button>
         </form>
         <a href="/dashboard">Volver</a>
-	</section>
-		
-		<!-- Scripts -->
-        <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    </section>
 
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+    <script>
+        function mostrarCheckboxes() {
+            var select = document.getElementById("tipo-transaccion");
+            var checkboxes = document.getElementById("checkboxes");
+            if (select.value === "gasto") {
+                checkboxes.style.display = "block"; // Muestra los radio buttons
+            } else {
+                checkboxes.style.display = "none"; // Oculta los radio buttons
+            }
+        }
+    </script>
 </body>
 </html>
