@@ -659,6 +659,7 @@ input[type="radio"] {
   opacity: 0;
   width: 1em;
   z-index: -1; }
+
   input[type="checkbox"] + label,
   input[type="radio"] + label {
     text-decoration: none;
@@ -1090,4 +1091,20 @@ button,
   #dashboard-content h2, #dashboard-content p{
     text-align: left;
     margin: 0.75em 0;}
+
+/* Estilo para el select */
+#tipo-transaccion {
+    margin-bottom: 1em; /* Espacio debajo del select */
+}
+
+/* Estilo para los radio buttons */
+#checkboxes input[type="radio"] {
+    margin-right: 0.5em; /* Espacio a la derecha de cada radio button */
+    margin-top: 0.5em; /* Espacio arriba de cada radio button */
+}
+
+/* Estilo para las etiquetas de los radio buttons */
+#checkboxes label {
+    margin-right: 1em; /* Espacio entre las etiquetas de los radio buttons */
+}
   

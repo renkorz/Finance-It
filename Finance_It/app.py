@@ -27,19 +27,22 @@ def signup():
     if request.method == 'POST':
         name = request.form['first_name']
         last_name = request.form['last_name']
-        email = request.form['email']
+        email = request.form['user_email']
         username = request.form['username']
         password = request.form['password']
         
         try:
             # Llama a la función para registrar al usuario
-            DAL.conexion_db.signup_db(username, name, last_name, email, password)
-            print('Registro Exitoso')
+            DAL.conexion_db.signup_db(name, last_name, email, username, password)
+            print(f"Nombre: {name}, Apellido: {last_name}, Email: {email}, Usuario: {username}, Contraseña: {password}")
             return redirect(url_for('login'))  # Redirigir al login después del registro
-        except Exception as e:
-            print(f'Error al registrar el usuario: {e}')
+        except Exception:
             return render_template('signup.html', error='Error al registrar el usuario. Inténtalo de nuevo.')  # Mostrar error en el formulario
     return render_template('signup.html')  # Mostrar el formulario de registro
+
+@app.route('/graph', methods=['GET', 'POST'])
+def graph():
+    return render_template('graph.html')
 
 # Ruta de inicio (login)
 @app.route('/login', methods=['GET', 'POST'])
@@ -76,10 +79,20 @@ def dashboard():
         total_gastos_esenciales=total_gastos_esenciales,
         total_gastos_no_esenciales=total_gastos_no_esenciales
     )
-
+#Ruta para agregar ingresos y gastos
 @app.route('/add_data', methods=['GET', 'POST'])
 def add_data():
-    return render_template('add_data.html')
+    if request.method == 'POST':
+        tipo_transaccion = request.form['tipo-transaccion']  # Lee el tipo de transacción (ingreso o gasto)
+        monto = float(request.form['Monto'])  # Lee el monto
+        fecha = request.form['Fecha']  # Lee la fecha
+        descripcion = request.form['Descripción']  # Lee la descripción
+
+        DAL.conexion_db.ingrsar_transccion(tipo_transaccion, monto, fecha, descripcion)
+
+        return redirect(url_for('dashboard'))  # Redirigir al dashboard después de agregar la transacción
+
+    return render_template('add_data.html')  # Muestra el formulario si es una solicitud GET
 
 #Ruta para agregar ingresos y gastos.
 @app.route('/add_transaction', methods=['GET', 'POST'])

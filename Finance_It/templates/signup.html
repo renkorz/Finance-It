@@ -19,20 +19,19 @@
 				
 		</header>
 
-
         <!-- Signup Form -->
-        <form id="signup-form" method="post" action="#">
-			<h1>Registrarse</h1>
-			<p>Completa los campos solicitados para continuar con el registro de usuario</p>
-            <input type="text" name="firs_name" id="user_name" placeholder="Nombre" />
-            <input type="text" name="last_name" id="last_name" placeholder="Apellido" />
-			<input type="email" name="email" id="user_email" placeholder="Correo electrónico" />
-            <input type="text" name="username" id="username" placeholder="Nombre de Usuario" />
-            <input type="password" name="password" id="password" placeholder="Contraseña" />
-            <input type="submit" value="Registrarse" />
-            <a href="/">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
-        </form>
 
+			<form id="signup-form" method="POST">
+				<h1>Registrarse</h1>
+				<p>Completa los campos solicitados para continuar con el registro de usuario</p>
+				<input type="text" name="first_name" id="first_name" placeholder="Nombre" required/>
+				<input type="text" name="last_name" id="last_name" placeholder="Apellido" required/>
+				<input type="email" name="user_email" id="user_email" placeholder="Correo electrónico" required/>
+				<input type="text" name="username" id="username" placeholder="Nombre de Usuario" required/>
+				<input type="password" name="password" id="password" placeholder="Contraseña" required/>
+				<input type="submit" value="Registrarse" />
+				<a href="/login">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
+			</form>
 
 		<!-- Footer -->
 			<footer id="footer">
