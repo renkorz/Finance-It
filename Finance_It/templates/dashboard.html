@@ -17,17 +17,17 @@
 			<a href="/add_data">Ingresar Datos</a>
             <a href="/add_goal">Agregar Meta</a>
 			<a href="/view_graphs">Ver Gráficos</a>
-			<a href="/signup">Cerrar Sesión</a>
+			<a href="/">Cerrar Sesión</a>
 		</nav>
 	</header>
 
     <!-- Contenido de la página -->
 	<section id="dashboard-content">
         <h2>Resumen Financiero</h2>
-        <p>Ingreso Mensual: ${{ ingreso }}</p>
-        <p>Gastos Esenciales: ${{ total_gastos_esenciales }}</p>
-        <p>Gastos No Esenciales: ${{ total_gastos_no_esenciales }}</p>
-        <p>Metas Financieras: {{ metas|length }}</p>
+        <p>INGRESO TOTAL: ${{ ingreso }}</p>
+        <p>GASTOS ESENCIALES: ${{ total_gastos_esenciales }}</p>
+        <p>GASTOS NO ESCENCIALES: ${{ total_gastos_no_esenciales }}</p>
+        <p>METAS FINANCIERAS: {{ metas|length }}</p>
 	</section>
 
     <!-- Footer -->

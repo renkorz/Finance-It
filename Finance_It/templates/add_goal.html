@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Agregar Meta</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
+	<head>
+		<title>FinanceIT</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+	</head>
 <body>
-    <h2>Agregar Nueva Meta</h2>
-    <form action="/add_goal" method="post">
-        <label>Nombre de la Meta:</label>
-        <input type="text" name="nombre_meta" required>
-        <label>Valor ($):</label>
-        <input type="number" step="0.01" name="valor_meta" required>
-        <button type="submit">Guardar Meta</button>
-    </form>
-    <a href="/dashboard">Volver</a>
+    <header id="dashboard-header">
+		<h1>FinanceIT</h1>
+        <hr>
+		<!-- Navigation Bar -->
+		<nav id="nav-bar">
+			<a href="/dashboard">Inicio</a>
+			<a href="/add_data">Ingresar Datos</a>
+            <a href="/add_goal">Agregar Meta</a>
+			<a href="/view_graphs">Ver Gráficos</a>
+			<a href="/signup">Cerrar Sesión</a>
+		</nav>
+	</header>
+
+        <!-- Contenido de la página -->
+	<section id="addgoal-content">
+        <h2>Agregar Nueva Meta</h2>
+        <form action="/add_goal" method="post">
+            <input type="text" name="name_goal" required placeholder="Nombre de la Meta">
+            <input type="number" name="valor_meta" required placeholder="Valor $">
+            <input type="text" name="descr_goal" placeholder="Descripción">
+            <button type="submit">Guardar Meta</button>
+        </form>
+        <a href="/dashboard">Volver</a>
+	</section>
+
+    		<!-- Scripts -->
+            <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
 </body>
 </html>

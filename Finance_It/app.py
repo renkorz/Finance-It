@@ -27,15 +27,18 @@ def signup():
     if request.method == 'POST':
         name = request.form['first_name']
         last_name = request.form['last_name']
-        email = request.form['mail']
+        email = request.form['email']
         username = request.form['username']
         password = request.form['password']
         
-        # Llama a la función para registrar al usuario
-        DAL.conexion_db.signup_db(username, name, last_name, email, password)
-        print('Registro Exitoso')
-        return redirect(url_for('login'))  # Redirigir al login después del registro
-    
+        try:
+            # Llama a la función para registrar al usuario
+            DAL.conexion_db.signup_db(username, name, last_name, email, password)
+            print('Registro Exitoso')
+            return redirect(url_for('login'))  # Redirigir al login después del registro
+        except Exception as e:
+            print(f'Error al registrar el usuario: {e}')
+            return render_template('signup.html', error='Error al registrar el usuario. Inténtalo de nuevo.')  # Mostrar error en el formulario
     return render_template('signup.html')  # Mostrar el formulario de registro
 
 # Ruta de inicio (login)
@@ -73,6 +76,10 @@ def dashboard():
         total_gastos_esenciales=total_gastos_esenciales,
         total_gastos_no_esenciales=total_gastos_no_esenciales
     )
+
+@app.route('/add_data', methods=['GET', 'POST'])
+def add_data():
+    return render_template('add_data.html')
 
 #Ruta para agregar ingresos y gastos.
 @app.route('/add_transaction', methods=['GET', 'POST'])

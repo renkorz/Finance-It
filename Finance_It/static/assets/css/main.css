@@ -572,6 +572,8 @@ label {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="date"],
+input[type="number"],
 select,
 textarea {
   -moz-appearance: none;
@@ -599,12 +601,16 @@ textarea {
   input[type="text"]:invalid,
   input[type="password"]:invalid,
   input[type="email"]:invalid,
+  input[type="date"]:invalid,
+  input[type="number"]:invalid,
   select:invalid,
   textarea:invalid {
     box-shadow: none; }
   input[type="text"]:focus,
   input[type="password"]:focus,
   input[type="email"]:focus,
+  input[type="date"]:focus,
+  input[type="number"]:focus,
   select:focus,
   textarea:focus {
     -moz-animation: focus 0.1s;
@@ -633,6 +639,8 @@ select {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="date"],
+input[type="number"],
 select {
   height: 2.75em; }
 
@@ -760,7 +768,7 @@ button,
   input[type="submit"]:hover,
   input[type="reset"]:hover,
   input[type="button"]:hover,
-  button:hover,
+    button:hover,
   .button:hover {
     background-color: #4acab1; 
     color: #ffffff !important; 
@@ -986,23 +994,6 @@ button,
   box-shadow: 0 0 0.2rem rgba(0,0,0,3);
 }
 
-#dashboard-content{
-  align-items: start;
-  background-color: #efefef;
-  color: #000;
-  padding: 1em;
-  border-radius: 6px;
-  margin-top: -20px;
-}
-
-#dashboard-content h2, #dashboard-content p{
-  text-align: left;
-  color: #000;
-}
-
-  #dashboard-content:hover{
-    box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,3);}
-
 /* Footer */
 #footer {
   -moz-transition: opacity 0.5s ease-in-out;
@@ -1055,11 +1046,48 @@ button,
       margin: 1em 0 0 0;
       position: relative; } }
 
+/*Add Data*/
 #adddata-form {
   align-items: start;
   background-color: #efefef33;
-  color: #000;
+  color: #ffffff96;
   padding: 1em;
   border-radius: 6px;
   margin-top: -20px;
-}
+  margin: 150px;
+  box-shadow: 0 0 0.2rem rgba(0,0,0,5);}
+
+#adddata-form input{
+  margin: 0.75em 0;} 
+
+/*Add Goal*/
+#addgoal-content{
+  align-items: start;
+  background-color: #efefef33;
+  color: #ffffff96;
+  padding: 1em;
+  border-radius: 6px;
+  margin-top: -20px;
+  margin: 150px;
+  box-shadow: 0 0 0.2rem rgba(0,0,0,5);}
+
+#addgoal-content p, input{
+  text-align: left;
+  margin: 0.75em 0;}
+
+
+/*Dashboard*/
+#dashboard-content{
+  align-items: start;
+  background-color: #efefef33;
+  color: #ffffff96;
+  padding: 1em;
+  border-radius: 6px;
+  margin-top: -20px;
+  margin: 150px;
+  box-shadow: 0 0 0.2rem rgba(0,0,0,5);}
+  
+  #dashboard-content h2, #dashboard-content p{
+    text-align: left;
+    margin: 0.75em 0;}
+  

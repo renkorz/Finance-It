@@ -22,17 +22,26 @@ def signup_db(username, name, last_name, mail, password):
     cnx = conexion_db()
     if cnx is not None:
         cursor = cnx.cursor()
-        query = f"""
-        INSERT INTO usuario (username, name, last_name, mail, password)
-        SELECT %s, %s, %s, %s, %s
-        WHERE NOT EXISTS (
-            SELECT 1 FROM usuario WHERE username = '{username}'
-        )
-        """
-        cursor.execute(query, (username, name, last_name, mail, password))
-        cnx.commit()
-        cursor.close()
-        cnx.close()
+        try:
+            # Verificar si el usuario ya existe
+            cursor.execute("SELECT 1 FROM usuario WHERE username = %s", (username))
+            if cursor.fetchone() is not None:
+                print("El nombre de usuario ya existe.")
+                return
+
+            # Insertar el nuevo usuario
+            query = """
+            INSERT INTO usuario (username, name, last_name, mail, password)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(query, (username, name, last_name, mail, password))
+            cnx.commit()
+            print("Registro exitoso.")
+        except mysql.connector.Error as err:
+            print(f"Error al registrar el usuario: {err}")
+        finally:
+            cursor.close()
+            cnx.close()
 
 def login_db(username, password):
     """Función para buscar las credenciales en la DB"""
