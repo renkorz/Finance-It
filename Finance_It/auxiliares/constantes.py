@@ -1,5 +1,1 @@
-#Creación DB
-user = 'root'
-password = ''
-host = 'localhost'
-database = 'financeit'
+MASTERKEY = 'inakifranleo'

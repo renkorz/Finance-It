@@ -4,31 +4,31 @@
     <title>FinanceIT</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 </head>
 <body>
     <!-- Header -->
-	<header id="dashboard-header">
-		<h1>FinanceIT</h1>
+    <header id="dashboard-header">
+        <h1>FinanceIT</h1>
         <hr>
-		<!-- Navigation Bar -->
-		<nav id="nav-bar">
-			<a href="/dashboard">Inicio</a>
-			<a href="/add_data">Ingresar Datos</a>
+        <!-- Navigation Bar -->
+        <nav id="nav-bar">
+            <a href="/dashboard">Inicio</a>
+            <a href="/add_data">Ingresar Datos</a>
             <a href="/add_goal">Agregar Meta</a>
-			<a href="/graph">Ver Gráficos</a>
-			<a href="/">Cerrar Sesión</a>
-		</nav>
-	</header>
+            <a href="/graph">Ver Gráficos</a>
+            <a href="/">Cerrar Sesión</a>
+        </nav>
+    </header>
 
     <!-- Contenido de la página -->
-	<section id="dashboard-content">
+    <section id="dashboard-content">
         <h2>Resumen Financiero</h2>
         <p>INGRESO TOTAL: ${{ ingreso }}</p>
-        <p>GASTOS ESENCIALES: ${{ total_gastos_esenciales }}</p>
-        <p>GASTOS NO ESCENCIALES: ${{ total_gastos_no_esenciales }}</p>
+        <p>GASTOS ESENCIALES: ${{ gastos_esenciales }}</p>
+        <p>GASTOS NO ESENCIALES: ${{ gastos_no_esenciales }}</p>
         <p>METAS FINANCIERAS: {{ metas|length }}</p>
-	</section>
+    </section>
 
     <!-- Footer -->
     <footer id="footer">
@@ -43,8 +43,8 @@
         </ul>
     </footer>
 
-		<!-- Scripts -->
-        <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>

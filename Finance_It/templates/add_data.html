@@ -4,7 +4,7 @@
     <title>FinanceIT</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 </head>
 <body class="is-preload">
     <!-- Header -->
@@ -24,7 +24,7 @@
     <!-- Contenido de la página -->
     <section id="adddata-form">
         <h2>Ingresar Datos</h2>
-        <form action="POST">
+        <form action="/add_data" method="POST">
             <select id="tipo-transaccion" name="tipo-transaccion" required onchange="mostrarCheckboxes()">
                 <option value="ingreso">Ingreso</option>
                 <option value="gasto">Gasto</option>
@@ -44,7 +44,7 @@
     </section>
 
     <!-- Scripts -->
-    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     <script>
         function mostrarCheckboxes() {

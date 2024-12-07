@@ -1,53 +1,43 @@
 <!DOCTYPE HTML>
-<!--
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
-	<head>
-		<title>FinanceIT</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
-	</head>
-	<body class="is-preload">
+<head>
+    <title>FinanceIT</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+</head>
+<body class="is-preload">
 
-		<!-- Header -->
-		<header id="header">
-        	<a href="/"><h1>FinanceIT</h1></a>
-				
-		</header>
+    <header id="header">
+        <a href="/"><h1>FinanceIT</h1></a>
+    </header>
 
-        <!-- Signup Form -->
+    <form action="/signup" id="signup-form" method="POST">
+        <h1>Registrarse</h1>
+        <p>Completa los campos solicitados para continuar con el registro de usuario</p>
+        <input type="email" id="email" name="email" placeholder="Correo electrónico" required/>
+        <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required/>
+        <input type="password" id="password" name="password" placeholder="Contraseña" required/>
+        <input type="submit" value="Registrarse" />
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <a href="/login">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
+    </form>
 
-			<form id="signup-form" method="POST">
-				<h1>Registrarse</h1>
-				<p>Completa los campos solicitados para continuar con el registro de usuario</p>
-				<input type="text" name="first_name" id="first_name" placeholder="Nombre" required/>
-				<input type="text" name="last_name" id="last_name" placeholder="Apellido" required/>
-				<input type="email" name="user_email" id="user_email" placeholder="Correo electrónico" required/>
-				<input type="text" name="username" id="username" placeholder="Nombre de Usuario" required/>
-				<input type="password" name="password" id="password" placeholder="Contraseña" required/>
-				<input type="submit" value="Registrarse" />
-				<a href="/login">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
-			</form>
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="https://github.com/renkorz/Finance-It" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; FinanceIT</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </footer>
 
-		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="https://github.com/renkorz/Finance-It" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; FinanceIT</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-		<!-- Scripts -->
-        <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-
-	</body>
+</body>
 </html>
