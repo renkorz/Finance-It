@@ -133,15 +133,18 @@ def add_data():
             'tipo_gasto': tipo_gasto
         }
         
+        # Obtener la ruta absoluta para datos.json
+        data_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos.json')
+        
         # Guardar en un archivo JSON (opcional)
-        if os.path.exists('datos.json'):
-            with open('datos.json', 'r+') as f:
+        if os.path.exists(data_file_path):
+            with open(data_file_path, 'r+') as f:
                 existing_data = json.load(f)
                 existing_data.append(data)
                 f.seek(0)
                 json.dump(existing_data, f)
         else:
-            with open('datos.json', 'w') as f:
+            with open(data_file_path, 'w') as f:
                 json.dump([data], f)
 
         return redirect(url_for('dashboard'))  # Redirigir a otra página después de guardar
