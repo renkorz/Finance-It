@@ -1,46 +1,50 @@
-<!-- dashboard.html -->
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles_dashboard.css" />
+    <title>FinanceIT</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
 </head>
 <body>
-    <header>
-        <section>
-            <div class="navbar">
-                <a href="/dashboard">Dashboard</a>
-                <a href="/add_finances">Agregar Finanzas</a>
-                <a href="/add_goal">Agregar Meta</a>
-                <a href="/graph_expenses">Gráfico de Gastos</a>
-                <a href="/graph_goals">Gráfico de Metas</a>
-                <a href="/add_transaction">Transacciones</a>
-                <a href="/logout">Cerrar Sesión</a>
-            </div>
-        </section>
-    </header>
+    <!-- Header -->
+	<header id="dashboard-header">
+		<h1>FinanceIT</h1>
+        <hr>
+		<!-- Navigation Bar -->
+		<nav id="nav-bar">
+			<a href="/dashboard">Inicio</a>
+			<a href="/add_data">Ingresar Datos</a>
+            <a href="/add_goal">Agregar Meta</a>
+			<a href="/view_graphs">Ver Gráficos</a>
+			<a href="/">Cerrar Sesión</a>
+		</nav>
+	</header>
 
-    <br>
-    <section>
-        <div class="container">
-            <div class="section">
-                <h2>Resumen Financiero</h2>
-                <p><strong>Ingreso Mensual:</strong> ${{ ingreso }}</p>
-                <p><strong>Gastos Esenciales:</strong> ${{ total_gastos_esenciales }}</p>
-                <p><strong>Gastos No Esenciales:</strong> ${{ total_gastos_no_esenciales }}</p>
-                <p><strong>Metas Financieras:</strong> {{ metas|length }}</p>
-            </div>
-    </section>
+    <!-- Contenido de la página -->
+	<section id="dashboard-content">
+        <h2>Resumen Financiero</h2>
+        <p>INGRESO TOTAL: ${{ ingreso }}</p>
+        <p>GASTOS ESENCIALES: ${{ total_gastos_esenciales }}</p>
+        <p>GASTOS NO ESCENCIALES: ${{ total_gastos_no_esenciales }}</p>
+        <p>METAS FINANCIERAS: {{ metas|length }}</p>
+	</section>
 
-
-
-
-    <footer>
-        <p>&copy; 2024 Finanzas</p>
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="https://github.com/renkorz/Finance-It" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; FinanceIT</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
     </footer>
+
+		<!-- Scripts -->
+        <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
 </body>
 </html>

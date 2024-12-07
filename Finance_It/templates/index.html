@@ -15,20 +15,15 @@
 
 		<!-- Header -->
 			<header id="header">
-        	<a href="/"><h1>FinanceIT</h1></a>
+                <a href="/">
+                    <h1>FinanceIT</h1>
+                </a>
+				<p>Tu asistente financiero</p>
 			</header>
 
-		<section>
-			<!-- login Form -->
-				<form id="login-form" method="POST" action="#">
-				<h1>Inicia Sesión</h1>
-				<p>Completa los campos solicitados para continuar con el inicio de sesión</p>
-				<input type="text" name="username" id="username" placeholder="Nombre de Usuario" />
-				<input type="password" name="password" id="password" placeholder="Contraseña" />
-				<input type="submit" value="Iniciar Sesión" />
-				<a href="/signup">¿No tienes Cuenta? Registrate Aquí</a>
-			</form>
-		</section>
+		<!-- Signup button -->
+            <a href="/signup"><input type="submit" value="Registrate Aquí" /></a>
+			<a href="/login">¿Ya tienes cuenta? Inicia Sesión Aquí</a>
 
 		<!-- Footer -->
 			<footer id="footer">
@@ -44,7 +39,7 @@
 			</footer>
 
 		<!-- Scripts -->
-			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+		<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
 	</body>
 </html>
