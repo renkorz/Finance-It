@@ -1,0 +1,1 @@
+[{"tipo_transaccion": "ingreso", "monto": "10", "fecha": "2024-12-03", "descripcion": "vendi un pollo", "tipo_gasto": null}, {"tipo_transaccion": "gasto", "monto": "1", "fecha": "2024-12-05", "descripcion": "compre un dulce", "tipo_gasto": "Gasto Esencial"}]

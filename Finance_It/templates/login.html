@@ -9,7 +9,7 @@
 		<title>FinanceIT</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 	</head>
 	<body class="is-preload">
 
@@ -20,14 +20,18 @@
 
 		<section>
 			<!-- login Form -->
-				<form id="login-form" method="POST" action="#">
+			<form id="login-form" method="POST" action="/login">
 				<h1>Inicia Sesión</h1>
 				<p>Completa los campos solicitados para continuar con el inicio de sesión</p>
-				<input type="text" name="username" id="username" placeholder="Nombre de Usuario" />
-				<input type="password" name="password" id="password" placeholder="Contraseña" />
+				<input type="text" name="username" id="username" placeholder="Nombre de Usuario" required />
+				<input type="password" name="password" id="password" placeholder="Contraseña" required />
 				<input type="submit" value="Iniciar Sesión" />
 				<a href="/signup">¿No tienes Cuenta? Registrate Aquí</a>
+				{% if error %}
+    			<p style="color: red;">{{ error }}</p>
+				{% endif %}
 			</form>
+
 		</section>
 
 		<!-- Footer -->
@@ -44,7 +48,6 @@
 			</footer>
 
 		<!-- Scripts -->
-			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-
+		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 	</body>
 </html>
