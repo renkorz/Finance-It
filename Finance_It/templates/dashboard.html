@@ -24,10 +24,14 @@
     <!-- Contenido de la página -->
     <section id="dashboard-content">
         <h2>Resumen Financiero</h2>
-        <p>INGRESO TOTAL: ${{ ingreso }}</p>
-        <p>GASTOS ESENCIALES: ${{ gastos_esenciales }}</p>
-        <p>GASTOS NO ESENCIALES: ${{ gastos_no_esenciales }}</p>
-        <p>METAS FINANCIERAS: {{ metas|length }}</p>
+        <p>Ingresos Totales: ${{ ingreso | format_number }}</p>
+        <p>Gastos Esenciales: ${{ gastos_esenciales | format_number }}</p>
+        <p>Gastos no Esenciales: ${{ gastos_no_esenciales | format_number }}</p>
+        
+        <h2>Metas</h2>
+        {% for meta in metas %}
+        <p>{{ meta.name_goal }}: ${{ meta.valor_meta }}</li>
+        {% endfor %}
     </section>
 
     <!-- Footer -->
@@ -39,12 +43,11 @@
             <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
         </ul>
         <ul class="copyright">
-            <li>&copy; FinanceIT</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
+            <li>&copy; FinanceIT</li><li>En memoria de Marcelo Z, caído en batalla</li>
         </ul>
     </footer>
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
 </body>
 </html>

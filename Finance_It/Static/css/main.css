@@ -1108,3 +1108,57 @@ button,
     margin-right: 1em; /* Espacio entre las etiquetas de los radio buttons */
 }
   
+#container {
+  display: flex; /* Usamos flexbox para organizar los gráficos en línea */
+  justify-content: space-between; /* Espacio entre los gráficos */
+  gap: 2%; /* Espacio entre los gráficos (puedes ajustarlo según sea necesario) */
+  margin: 20px auto; /* Centrado y margen superior */
+  max-width: 90%; /* Limita el ancho total del contenedor */
+}
+
+#graph1, #graph2 {
+  flex: 1; /* Ambos gráficos ocupan el mismo espacio */
+  max-width: 48%; /* Para asegurar que se ajusten al espacio */
+  background-color: #efefef33;
+  color: #efefef;
+  padding: 1em;
+  border-radius: 6px;
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
+  text-align: center; /* Opcional: centra el texto */
+}
+
+#graph1 {
+  flex: 1;
+  max-width: 100%;
+  background-color: #efefef33;
+  color: #efefef;
+  padding: 1em;
+  border-radius: 6px;
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
+  text-align: center; /* Alinea el texto horizontalmente */
+  
+  /* Centrado vertical */
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  justify-content: center; /* Centra el contenido verticalmente */
+  align-items: center; /* Centra el contenido horizontalmente */
+  height: 100%; /* Asegúrate de que ocupe toda la altura del contenedor */
+}
+
+#graph2 {
+  flex: 1;
+  max-width: 100%;
+  background-color: #efefef33;
+  color: #efefef;
+  padding: 1em;
+  border-radius: 6px;
+  box-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.5);
+  text-align: center; /* Alinea el texto horizontalmente */
+  
+  /* Centrado vertical */
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  justify-content: center; /* Centra el contenido verticalmente */
+  align-items: center; /* Centra el contenido horizontalmente */
+  height: 100%; /* Asegúrate de que ocupe toda la altura del contenedor */
+}

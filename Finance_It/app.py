@@ -30,6 +30,12 @@ def save_users(users):
     except Exception as e:
         print("Error al guardar usuarios:", e)  # Imprime el error en la consola
 
+#Formatear numeros con punto a la centesima
+def format_number(num):
+    return '{:,.0f}'.format(num).replace(',', '.')
+
+app.jinja_env.filters['format_number'] = format_number
+
 #INDEX DE LA APP
 @app.route('/')
 def index():
@@ -88,30 +94,41 @@ def signup():
     return render_template('signup.html', error=error)
 
 #DASHBOARD DE USUARIO LOGGEADO
+# DASHBOARD DE USUARIO LOGGEADO
 @app.route('/dashboard')
 def dashboard():
-    # Cargar datos de transacciones desde el archivo JSON
-    file_path = os.path.join(os.path.dirname(__file__), 'datos.json')
+    username = session.get('username')  # Obtener el nombre de usuario de la sesión
     ingresos = 0
     gastos_esenciales = 0
     gastos_no_esenciales = 0
 
+    # Cargar datos de transacciones
+    file_path = os.path.join(os.path.dirname(__file__), 'datos.json')
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             try:
                 data = json.load(f)
                 for transaction in data:
-                    if transaction['tipo_transaccion'] == 'ingreso':
-                        ingresos += float(transaction['monto'])
-                    elif transaction['tipo_transaccion'] == 'gasto':
-                        if transaction['tipo_gasto'] == 'Gasto Esencial':
-                            gastos_esenciales += float(transaction['monto'])
-                        elif transaction['tipo_gasto'] == 'No Esencial':
-                            gastos_no_esenciales += float(transaction['monto'])
+                    if transaction['username'] == username:  # Filtrar por usuario
+                        if transaction['tipo_transaccion'] == 'ingreso':
+                            ingresos += float(transaction['monto'])
+                        elif transaction['tipo_transaccion'] == 'gasto':
+                            if transaction['tipo_gasto'] == 'Gasto Esencial':
+                                gastos_esenciales += float(transaction['monto'])
+                            elif transaction['tipo_gasto'] == 'No Esencial':
+                                gastos_no_esenciales += float(transaction['monto'])
             except json.JSONDecodeError:
                 print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
 
-    return render_template('dashboard.html', ingreso=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales)
+    # Cargar metas
+    goals = load_goals()  # Cargar metas desde el archivo JSON
+
+    # Convertir a enteros
+    ingresos = int(ingresos)
+    gastos_esenciales = int(gastos_esenciales)
+    gastos_no_esenciales = int(gastos_no_esenciales)
+
+    return render_template('dashboard.html', ingreso=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales, metas=goals)
 
 # INGRESO DE DATOS
 @app.route('/add_data', methods=['GET', 'POST'])
@@ -121,22 +138,23 @@ def add_data():
         monto = request.form.get('Monto')
         fecha = request.form.get('Fecha')
         descripcion = request.form.get('Descripción')
-        # Si es un gasto, obtener el tipo de gasto
         tipo_gasto = request.form.get('tipo_gasto') if tipo_transaccion == 'gasto' else None
         
+        # Obtener el nombre de usuario de la sesión
+        username = session.get('username')
+
         # Guardarlos en un archivo JSON:
         data = {
             'tipo_transaccion': tipo_transaccion,
             'monto': monto,
             'fecha': fecha,
             'descripcion': descripcion,
-            'tipo_gasto': tipo_gasto
+            'tipo_gasto': tipo_gasto,
+            'username': username  # Agregar el nombre de usuario
         }
         
-        # Obtener la ruta absoluta para datos.json
+        # Guardar en el archivo JSON
         data_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos.json')
-        
-        # Guardar en un archivo JSON (opcional)
         if os.path.exists(data_file_path):
             with open(data_file_path, 'r+') as f:
                 existing_data = json.load(f)
@@ -147,19 +165,91 @@ def add_data():
             with open(data_file_path, 'w') as f:
                 json.dump([data], f)
 
-        return redirect(url_for('dashboard'))  # Redirigir a otra página después de guardar
+        return redirect(url_for('dashboard'))
 
-    return render_template('add_data.html')  # Renderizar el formulario si es un GET
+    return render_template('add_data.html')
 
-# INGRESO DE METAS
-@app.route('/add_goal')
+# Función para cargar metas desde el archivo JSON
+def load_goals():
+    file_path = os.path.join(os.path.dirname(__file__), 'metas.json')  # Ruta del archivo metas.json
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                print("Error al leer el archivo metas.json. El archivo puede estar corrupto.")
+                return []
+    return []
+
+# Función para guardar metas en el archivo JSON
+def save_goals(goals):
+    file_path = os.path.join(os.path.dirname(__file__), 'metas.json')  # Ruta del archivo metas.json
+    try:
+        with open(file_path, 'w') as f:
+            json.dump(goals, f)
+    except Exception as e:
+        print("Error al guardar metas:", e)
+
+# Ruta para agregar metas
+@app.route('/add_goal', methods=['GET', 'POST'])
 def add_goal():
-    return render_template('add_goal.html')
+    if request.method == 'POST':
+        name_goal = request.form.get('name_goal')
+        valor_meta = request.form.get('valor_meta')
+        descr_goal = request.form.get('descr_goal')
+
+        # Obtener el nombre de usuario de la sesión
+        username = session.get('username')
+
+        # Crear un diccionario para la nueva meta
+        new_goal = {
+            'name_goal': name_goal,
+            'valor_meta': valor_meta,
+            'descr_goal': descr_goal,
+            'username': username  # Asociar la meta al usuario
+        }
+
+        # Cargar metas existentes
+        goals = load_goals()
+        goals.append(new_goal)  # Añadir la nueva meta a la lista
+
+        # Guardar las metas actualizadas en el archivo
+        save_goals(goals)
+
+        return redirect(url_for('dashboard'))  # Redirigir al dashboard después de agregar la meta
+
+    return render_template('add_goal.html')  # Renderizar el formulario para agregar metas
 
 # GENERACIÓN DE GRAFICOS Y VISTA DE GRAFICOS
 @app.route('/graph')
 def graph():
-    return render_template('graph.html')
+    username = session.get('username')  # Obtener el nombre de usuario de la sesión
+    ingresos = 0
+    gastos_esenciales = 0
+    gastos_no_esenciales = 0
+
+    # Cargar datos de transacciones
+    file_path = os.path.join(os.path.dirname(__file__), 'datos.json')
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            try:
+                data = json.load(f)
+                for transaction in data:
+                    if transaction['username'] == username:  # Filtrar por usuario
+                        if transaction['tipo_transaccion'] == 'ingreso':
+                            ingresos += float(transaction['monto'])
+                        elif transaction['tipo_transaccion'] == 'gasto':
+                            if transaction['tipo_gasto'] == 'Gasto Esencial':
+                                gastos_esenciales += float(transaction['monto'])
+                            elif transaction['tipo_gasto'] == 'No Esencial':
+                                gastos_no_esenciales += float(transaction['monto'])
+            except json.JSONDecodeError:
+                print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
+
+    # Imprimir los valores para depuración
+    print(f'Ingresos: {ingresos}, Gastos Esenciales: {gastos_esenciales}, Gastos No Esenciales: {gastos_no_esenciales}')
+
+    return render_template('graph.html', ingresos=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales)
 
 if __name__ == '__main__':
     app.run(debug=True)
