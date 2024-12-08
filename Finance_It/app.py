@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import Auxiliares.Constantes
 import json, os
+import numpy as np
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = Auxiliares.Constantes.MASTERKEY
@@ -227,6 +231,8 @@ def graph():
     ingresos = 0
     gastos_esenciales = 0
     gastos_no_esenciales = 0
+    ingresos_graph2 = []
+    fechas = []
 
     # Cargar datos de transacciones
     file_path = os.path.join(os.path.dirname(__file__), 'datos.json')
@@ -246,10 +252,56 @@ def graph():
             except json.JSONDecodeError:
                 print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
 
-    # Imprimir los valores para depuración
-    print(f'Ingresos: {ingresos}, Gastos Esenciales: {gastos_esenciales}, Gastos No Esenciales: {gastos_no_esenciales}')
+        with open(file_path, 'r') as f:
+            try:
+                data = json.load(f)
+                for transaction in data:
+                    if transaction['username'] == username and transaction['tipo_transaccion'] == 'ingreso':
+                        ingresos_graph2.append(float(transaction['monto']))
+                        fechas.append(transaction['fecha'])  # Suponiendo que tienes fechas
 
-    return render_template('graph.html', ingresos=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales)
+            except json.JSONDecodeError:
+                print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
+
+    # Imprimir los valores para depuración
+    print(f'Ingresos: {ingresos_graph2}, Gastos Esenciales: {gastos_esenciales}, Gastos No Esenciales: {gastos_no_esenciales}')
+
+    # Calcular el ajuste exponencial
+    if ingresos_graph2:
+        x = np.arange(len(ingresos_graph2))  # Índices de los ingresos
+        y = np.array(ingresos_graph2)
+
+        # Ajuste exponencial
+        def exp_func(x, a, b):
+            return a * np.exp(b * x)
+
+        # Realizar el ajuste
+        from scipy.optimize import curve_fit
+        popt, _ = curve_fit(exp_func, x, y, p0=(1, 0.1))
+
+        # Generar valores ajustados
+        y_fit = exp_func(x, *popt)
+
+        # Graficar
+        plt.figure()
+        plt.scatter(x, y, label='Datos de Ingresos', color='blue')
+        plt.plot(x, y_fit, label='Ajuste Exponencial', color='red')
+        plt.title('Ajuste Exponencial de Ingresos')
+        plt.xlabel('Tiempo (días)')
+        plt.ylabel('Ingresos')
+        plt.legend()
+
+        # Guardar la figura en un archivo
+        graph_file_path = os.path.join(os.path.dirname(__file__), 'static', 'graph.png')
+        plt.savefig(graph_file_path)
+        plt.close()  # Cerrar la figura para liberar memoria
+
+    else:
+        graph_file_path = None
+
+    return render_template('graph.html', ingresos=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales, graph_file=graph_file_path)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
