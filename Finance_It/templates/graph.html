@@ -1,46 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>FinanceIT</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-    </head>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Finanzas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
 <body>
-	<header id="dashboard-header">
-		<h1>FinanceIT</h1>
-        <hr>
-		<!-- Navigation Bar -->
-		<nav id="nav-bar">
-			<a href="/dashboard">Inicio</a>
-			<a href="/add_data">Ingresar Datos</a>
+    <header id="dashboard-header">
+        <h1>FinanceIT</h1>
+        <nav id="nav-bar">
+            <a href="/dashboard">Inicio</a>
+            <a href="/add_data">Ingresar Datos</a>
             <a href="/add_goal">Agregar Meta</a>
-			<a href="/graph">Ver Gráficos</a>
-			<a href="/">Cerrar Sesión</a>
-		</nav>
-	</header>
+            <a href="/graph">Ver Gráficos</a>
+            <a href="/">Cerrar Sesión</a>
+        </nav>
+    </header>
+<div id="container">
+    <div id="graph1">
+        <h2>Gráfico de Finanzas</h2>
+        <canvas id="financeChart" width="400" height="400"></canvas>
+    </div>
+    <div id="graph2">
+        <h2>Gráfico de Ingresos</h2>
+        <img src="{{ url_for('static', filename='graph.png') }}" alt="Gráfico de Ingresos">
+    </div>
+</div>
 
-    <!-- Contenido de la página -->
-	<section id="dashboard-content">
-        <h2>Grafico</h2>
-        <img src="{{ url_for('static', filename='images/graph_goals.png') }}" alt="" width="400">
-	</section>
 
-		<!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/renkorz/Finance-It" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; FinanceIT</li><li>Credits: <a href="http://html5up.net">HTML5 UP</a></li>
-            </ul>
-        </footer>
+    <script>
+        const ctx = document.getElementById('financeChart').getContext('2d');
+        const financeChart = new Chart(ctx, {
+            type: 'pie', // Tipo de gráfico circular
+            data: {
+                labels: ['Ingresos', 'Gastos Esenciales', 'Gastos No Esenciales'],
+                datasets: [{
+                    label: 'Finanzas',
+                    data: [{{ ingresos | default(0) }}, {{ gastos_esenciales | default(0) }}, {{ gastos_no_esenciales | default(0) }}],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#efefef'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribución de Ingresos y Gastos',
+                        color: '#efefef'
+                    }
+                }
+            }
+        });
+    </script>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-    <!-- Scripts -->
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="https://github.com/renkorz/Finance-It" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; FinanceIT</li><li>En memoria de Marcelo Z, caído en batalla</li>
+        </ul>
+    </footer>
+        <!-- Scripts -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
-</body>
-</html>
+    </body>
+    </html>
