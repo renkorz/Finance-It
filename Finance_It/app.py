@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import Auxiliares.Constantes
-import json, os
+import json, os, threading, queue
 import numpy as np
 import matplotlib.pyplot as plt
-import base64
-from io import BytesIO
+import Auxiliares.Constantes
 
 app = Flask(__name__)
 app.secret_key = Auxiliares.Constantes.MASTERKEY
+
+# Cola para la comunicación entre hilos
+graph_queue = queue.Queue()
 
 #Variables globales
 ingresos = 0
@@ -127,12 +128,20 @@ def dashboard():
     # Cargar metas
     goals = load_goals()  # Cargar metas desde el archivo JSON
 
+    # Filtrar metas por el usuario logueado
+    user_goals = [goal for goal in goals if goal['username'] == username]
+
+    # Calcular dinero restante
+    total_gastos = gastos_esenciales + gastos_no_esenciales
+    dinero_restante = ingresos - total_gastos
+
     # Convertir a enteros
     ingresos = int(ingresos)
     gastos_esenciales = int(gastos_esenciales)
     gastos_no_esenciales = int(gastos_no_esenciales)
+    dinero_restante = int(dinero_restante)
 
-    return render_template('dashboard.html', ingreso=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales, metas=goals)
+    return render_template('dashboard.html', ingreso=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales, metas=user_goals, dinero_restante=dinero_restante)
 
 # INGRESO DE DATOS
 @app.route('/add_data', methods=['GET', 'POST'])
@@ -225,33 +234,14 @@ def add_goal():
     return render_template('add_goal.html')  # Renderizar el formulario para agregar metas
 
 # GENERACIÓN DE GRAFICOS Y VISTA DE GRAFICOS
-@app.route('/graph')
-def graph():
-    username = session.get('username')  # Obtener el nombre de usuario de la sesión
-    ingresos = 0
-    gastos_esenciales = 0
-    gastos_no_esenciales = 0
+# Función para generar el gráfico
+def generate_graph(username):
     ingresos_graph2 = []
     fechas = []
 
     # Cargar datos de transacciones
     file_path = os.path.join(os.path.dirname(__file__), 'datos.json')
     if os.path.exists(file_path):
-        with open(file_path, 'r') as f:
-            try:
-                data = json.load(f)
-                for transaction in data:
-                    if transaction['username'] == username:  # Filtrar por usuario
-                        if transaction['tipo_transaccion'] == 'ingreso':
-                            ingresos += float(transaction['monto'])
-                        elif transaction['tipo_transaccion'] == 'gasto':
-                            if transaction['tipo_gasto'] == 'Gasto Esencial':
-                                gastos_esenciales += float(transaction['monto'])
-                            elif transaction['tipo_gasto'] == 'No Esencial':
-                                gastos_no_esenciales += float(transaction['monto'])
-            except json.JSONDecodeError:
-                print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
-
         with open(file_path, 'r') as f:
             try:
                 data = json.load(f)
@@ -264,7 +254,7 @@ def graph():
                 print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
 
     # Imprimir los valores para depuración
-    print(f'Ingresos: {ingresos_graph2}, Gastos Esenciales: {gastos_esenciales}, Gastos No Esenciales: {gastos_no_esenciales}')
+    print(f'Ingresos: {ingresos_graph2}')
 
     # Calcular el ajuste exponencial
     if ingresos_graph2:
@@ -296,10 +286,51 @@ def graph():
         plt.savefig(graph_file_path)
         plt.close()  # Cerrar la figura para liberar memoria
 
-    else:
-        graph_file_path = None
+        # Poner la ruta del gráfico en la cola
+        graph_queue.put(graph_file_path)
 
-    return render_template('graph.html', ingresos=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales, graph_file=graph_file_path)
+
+@app.route('/graph')
+def graph():
+    username = session.get('username')  # Obtener el nombre de usuario de la sesión
+    ingresos = 0
+    gastos_esenciales = 0
+    gastos_no_esenciales = 0
+
+    # Cargar datos de transacciones
+    file_path = os.path.join(os.path.dirname(__file__), 'datos.json')
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            try:
+                data = json.load(f)
+                for transaction in data:
+                    if transaction['username'] == username:  # Filtrar por usuario
+                        if transaction['tipo_transaccion'] == 'ingreso':
+                            ingresos += float(transaction['monto'])
+                        elif transaction['tipo_transaccion'] == 'gasto':
+                            if transaction['tipo_gasto'] == 'Gasto Esencial':
+                                gastos_esenciales += float(transaction['monto'])
+                            elif transaction['tipo_gasto'] == 'No Esencial':
+                                gastos_no_esenciales += float(transaction['monto'])
+            except json.JSONDecodeError:
+                print("Error al leer el archivo JSON. El archivo puede estar corrupto.")
+
+    # Iniciar el hilo para generar el gráfico
+    threading.Thread(target=generate_graph, args=(username,), daemon=True).start()
+
+    # Comenzar a verificar la cola para ver si el gráfico ha sido generado
+    check_graph_queue()
+
+    return render_template('graph.html', ingresos=ingresos, gastos_esenciales=gastos_esenciales, gastos_no_esenciales=gastos_no_esenciales)
+
+def check_graph_queue():
+    try:
+        graph_file_path = graph_queue.get_nowait()  # Intenta obtener la ruta del gráfico de la cola
+        # Aquí puedes hacer algo con la ruta del gráfico, como actualizar la interfaz
+        print(f'Gráfico generado: {graph_file_path}')
+    except queue.Empty:
+        pass  # No hay gráficos generados aún
+
 
 
 
