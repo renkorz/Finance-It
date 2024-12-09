@@ -27,10 +27,11 @@
         <p>Ingresos Totales: ${{ ingreso | format_number }}</p>
         <p>Gastos Esenciales: ${{ gastos_esenciales | format_number }}</p>
         <p>Gastos no Esenciales: ${{ gastos_no_esenciales | format_number }}</p>
-        
+        <p>Dinero Restante: ${{ dinero_restante | format_number }}</p>
+
         <h2>Metas</h2>
         {% for meta in metas %}
-        <p>{{ meta.name_goal }}: ${{ meta.valor_meta }}</li>
+        <p>{{ meta.name_goal }}: ${{ meta.valor_meta }}</p>
         {% endfor %}
     </section>
 
